@@ -1,0 +1,9 @@
+D:\Education\pety\labs\labs\bin\Debug\labs.exe.config
+D:\Education\pety\labs\labs\bin\Debug\labs.exe
+D:\Education\pety\labs\labs\bin\Debug\labs.pdb
+D:\Education\pety\labs\labs\obj\Debug\labs.csprojAssemblyReference.cache
+D:\Education\pety\labs\labs\obj\Debug\labs.csproj.CoreCompileInputs.cache
+D:\Education\pety\labs\labs\obj\Debug\labs.exe
+D:\Education\pety\labs\labs\obj\Debug\labs.pdb
+D:\Education\pety\labs\labs\bin\Debug\Algeba.dll
+D:\Education\pety\labs\labs\obj\Debug\labs.csproj.CopyComplete
