@@ -35,21 +35,12 @@ namespace labs
         /// </summary>
         public double LowLimit = 0;
 
-        /// <summary>
-        /// Верхняя граница игры
-        /// </summary>
+
         public double HighLimit = 0;
 
-        /// <summary>
-        /// Коллекция седловых точек;  
-        /// </summary>
+    
         public List<double> SaddlePoints;
 
-        #region Конструктор
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="matrixOfWinnings">Матрица выигрышей</param>
         public GameTheory(Matrix matrixOfWinnings)
         {
             //создаем матрицу выигрыша
@@ -64,13 +55,8 @@ namespace labs
             //создаем коллекцию седловых точек
             SaddlePoints = new List<double>();
         }
-        #endregion
-
-        #region Решение матричной игры
-        /// <summary>
-        /// Решение матричной игры
-        /// </summary>
-        public void MatrixGameSolution()
+ 
+        public bool MatrixCleanSolution()
         {
             Console.WriteLine("Матрица выигрышей: ");
             MatrixOfWinnings.View();
@@ -90,60 +76,53 @@ namespace labs
             {
                 GetSaddlePoints();
                 ViewSaddlePoints();
+                return true;
             }
             else
             {
-                Console.WriteLine("\nСедловых точек нет!" +
-                    "\nЗадача не решается чистой стратегией!");
+                return false;
+            }
+        }
 
-                DeletingRows();
-                DeletingColumns();
-                Matrix[] matrix;
-                var res = GetOptimalMixedStrategy(out matrix);
+        public void MatrixMixSoultion()
+        {
+            DeletingRows();
+            DeletingColumns();
+            Matrix[] matrix;
+            var res = GetOptimalMixedStrategy(out matrix);
 
-                if (res == null)
+            if (res == null)
+            {
+                Console.WriteLine("\nНеверная входная матрица!" +
+                "\nНе получится решить смешанными стратегиями!");
+            }
+
+            Console.WriteLine();
+
+            if (res != null)
+            {
+                for (int i = 0; i < res.Length; i++)
                 {
-                    Console.WriteLine("\nНеверная входная матрица!" +
-                    "\nНе получится решить смешанными стратегиями!");
-                }
+                    Console.WriteLine("p0 = {0} p1 = {1} v = {2}", Math.Round(res[i][0], 3), Math.Round(res[i][1], 3), Math.Round(res[i][4], 3));
+                    Console.WriteLine("q0 = {0} q1 = {1} v = {2}", Math.Round(res[i][2], 3), Math.Round(res[i][3], 3), Math.Round(res[i][4], 3));
 
-                Console.WriteLine();
+                    Console.WriteLine("\nСоответствующая матрица:");
 
-                if (res != null)
-                {
-                    for (int i = 0; i < res.Length; i++)
-                    {
-                        Console.WriteLine("p0 = {0} p1 = {1} v = {2}", Math.Round(res[i][0], 3), Math.Round(res[i][1], 3), Math.Round(res[i][4], 3));
-                        Console.WriteLine("q0 = {0} q1 = {1} v = {2}", Math.Round(res[i][2], 3), Math.Round(res[i][3], 3), Math.Round(res[i][4], 3));
+                    matrix[i].View();
+                    //matrixхъ
 
-                        Console.WriteLine("\nСоответствующая матрица:");
-
-                        matrix[i].View();
-                        //matrixхъ
-
-                        Console.WriteLine();
-                    }
+                    Console.WriteLine();
                 }
             }
         }
-        #endregion
 
-        /// <summary>
-        /// Метод нахождения значения функции вида: Н[0,i]*x + H[1,i]*(1-x)
-        /// </summary>
-        /// <param name="coefficient1">Коэффициент первой строки</param>
-        /// <param name="coefficient2">Коэффициент второй строки</param>
-        /// <param name="valueOfPoint">Значение точки</param>
-        /// <returns>Возвращает результат функции</returns>
+
         static double Function(double coefficient1, double coefficient2, double valueOfPoint)
         {
             return (coefficient1 * valueOfPoint) + (coefficient2 * (1 - valueOfPoint));
         }
 
-        #region Получение нижней и верхней границ игры
-        /// <summary>
-        /// Получение нижней и верхней границ игры
-        /// </summary>
+
         public void GetGameLimits()
         {
             //вектор минимальных элементов по строкам
@@ -171,9 +150,7 @@ namespace labs
             //верхняя граница игры
             HighLimit = VectorMaximumWins.GetMinimalItem();
         }
-        #endregion
 
-        #region Проверка наличия седловых точек
         public bool IsSaddlePoint()
         {
             if (LowLimit == HighLimit)
@@ -185,12 +162,7 @@ namespace labs
                 return false;
             }
         }
-        #endregion
 
-        #region Получение векторов выигрышей
-        /// <summary>
-        /// Получение векторов выигрышей
-        /// </summary>
         public void GetVectorsWins()
         {
             //проходимся по строкам матрицы
@@ -207,12 +179,7 @@ namespace labs
                 VectorMaximumWins[indexColumn] = MatrixOfWinnings.GetColumn(indexColumn).GetMaximalItem();
             }
         }
-        #endregion
 
-        #region Получение седловых точек
-        /// <summary>
-        /// Получение коллекции седловых точек 
-        /// </summary>
         public void GetSaddlePoints()
         {
             //если нижняя граница равна верхней границе
@@ -241,12 +208,7 @@ namespace labs
                 }
             }
         }
-        #endregion
 
-        #region Вывод седловых точек
-        /// <summary>
-        /// Вывод седловых точек
-        /// </summary>
         public void ViewSaddlePoints()
         {
             Console.WriteLine("Вывод седловых точек:");
@@ -257,13 +219,7 @@ namespace labs
                 Console.WriteLine("V{0} = {1}", indexItem + 1, SaddlePoints[indexItem]);
             }
         }
-        #endregion
-
-
-        #region Упрощение платежной матрицы по строкам
-        /// <summary>
-        /// Удаление заведомо проигрышных стратегий по строкам
-        /// </summary>
+ 
         public void DeletingRows()
         {
             //проходимся по строкам
@@ -302,12 +258,7 @@ namespace labs
                 }
             }
         }
-        #endregion
 
-        #region Упрощение платежной матрицы по столбцам
-        /// <summary>
-        /// Удаление заведомо проигрышных стратегий по столбцам
-        /// </summary>
         public void DeletingColumns()
         {
             //проходимся по столбцам
@@ -352,9 +303,7 @@ namespace labs
                 }
             }
         }
-        #endregion
 
-        #region Решение матричной игры с помощью смешанной стратегии 
         public Vector[] GetOptimalMixedStrategy(out Matrix[] mat)
         {
             if (MatrixOfWinnings.Row != 2 || MatrixOfWinnings.Column < 2)
@@ -419,7 +368,7 @@ namespace labs
 
             return ans;
         }
-        #endregion
+
 
         public static void Test()
         {
@@ -458,7 +407,11 @@ namespace labs
             }
             GameTheory netStrategy = new GameTheory(winsMatrix);
 
-            netStrategy.MatrixGameSolution();
+            var can_clean =  netStrategy.MatrixCleanSolution();
+            if (!can_clean)
+            {
+                netStrategy.MatrixMixSoultion();
+            }
         }
     }
 }

@@ -10,19 +10,22 @@ namespace labs
     {
         static void Main(string[] args)
         {
-            MaxFlow.gtr.Test();
+            Next("Транспортная задача");
+            TransportTask.Test();
+
+            Next("Задача о максимальном потоке");
+            MaxFlow.FordFulkersonMethod.Test();
 
             Next("Динамическое программирование");
-
             DynamicProgramming.Test();
 
             Next("Теория игр");
-
             GameTheory.Test();
 
-            Next("Транспортная задача");
 
-            TransportTask.Test();
+            Next("Теория игр");
+            GameTheory.Test();
+
 
             Console.WriteLine("----------------- Нажмите клавишу, чтобы выйти ----------------------------------------");
             Console.ReadKey();

@@ -15,7 +15,7 @@ namespace labs
             BLACK
         }
 
-        public class gtr
+        public class FordFulkersonMethod
         {
             private readonly int _n;
 
@@ -25,7 +25,7 @@ namespace labs
             int[] pred;
             Queue<int> q = new Queue<int>();
 
-            public gtr(int n)
+            public FordFulkersonMethod(int n)
             {
                 _n = n;
 
@@ -135,12 +135,12 @@ namespace labs
                                     "4 5 20"
                 };*/
 
-                gtr t = new gtr(n);
+                FordFulkersonMethod t = new FordFulkersonMethod(n);
 
                 Console.WriteLine("Количество вершин = " + n);
-                Console.WriteLine("Заданные рёбра:");
-                Console.WriteLine("Из".PadRight(5) + "В".PadRight(5) + "Ёмкость");
-                Console.WriteLine();
+                Console.WriteLine("-------------------------------------- Рёбра: ");
+                Console.WriteLine("From".PadRight(5) + "To".PadRight(5) + "Capacity");
+                Console.WriteLine("----------------------------------------------");
 
                 foreach (var edge in edges)
                 {
@@ -155,8 +155,8 @@ namespace labs
                     Console.WriteLine(s[0].PadRight(5) + s[1].PadRight(5) + s[2]);
                 }
 
-                Console.WriteLine("Максимальный поток = " + t.max_flow());
-                Console.WriteLine("Из".PadRight(5) + "В".PadRight(5) + "Ёмкость");
+                Console.WriteLine("Максимальный поток = " + t.max_flow() + "\n Остаточная емкость:");
+                Console.WriteLine("From".PadRight(5) + "To".PadRight(5) + "Capacity");
 
                 for (int i = 0; i < t.capacity.GetLength(0); i++)
                 {
@@ -168,6 +168,7 @@ namespace labs
                         Console.WriteLine(((i + 1).ToString()).PadRight(5) + ((j + 1).ToString()).PadRight(5) + (t.capacity[i, j] - t.flow[i, j]));
                     }
                 }
+                
             }
         }
     }

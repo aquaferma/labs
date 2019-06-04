@@ -52,8 +52,10 @@ namespace labs
                                     { 11, 12, 18, 6,  0 }};
                 //u = 0 -6 -7 -20
                 //v = 7 20 16 
-                Console.WriteLine("Потребности потребителей: ", a);
-                Console.WriteLine("Возможности поставщиков: ", b);
+
+                
+                Console.WriteLine("Потребности потребителей: {0}", arr_to_string(a));
+                Console.WriteLine("Возможности поставщиков: {0}", arr_to_string(b));
 
                 // действуем по алгоритму 
                 //Северозападный
@@ -61,9 +63,9 @@ namespace labs
 
                 //var optCr = Transport.GetOptCriteria(matrix, cVals);
 
-                Console.WriteLine("Цена перевозок: ", cVals);
+                Console.WriteLine("Цена перевозок: {0}", matrix_to_string(cVals));
 
-                Console.WriteLine("\n" + "Начальный опорный план методом северозаподного угла:", matrix);
+                Console.WriteLine("\n" + "Начальный опорный план методом северозаподного угла: {0}", matrix_to_string(matrix));
 
                 /*Console.WriteLine("\n" + "Критерий оптимальности:", optCr);*/
 
@@ -193,16 +195,16 @@ namespace labs
 
                 var method = new MinimumTariffsMethod();
 
-                Console.WriteLine("Потребности потребителей: ", needs);
-                Console.WriteLine("Возможности поставщиков: ", scope);
-                Console.WriteLine("Цена перевозок: ", costsMatrix);
+                Console.WriteLine("Потребности потребителей: {0}", arr_to_string(needs));
+                Console.WriteLine("Возможности поставщиков: {0}", arr_to_string(scope));
+                Console.WriteLine("Цена перевозок: {0}", matrix_to_string(costsMatrix));
                 Console.WriteLine("_______________________________________________");
 
                 int[,] ansDec; bool[,] ansBool;
 
                 method.Run(scope, needs, costsMatrix, out ansDec, out ansBool);
 
-                Console.WriteLine("\n" + "Начальный опорный план методом минимальных тарифов:", ansDec);
+                Console.WriteLine("\n" + "Начальный опорный план методом минимальных тарифов: {0}", matrix_to_string(ansDec));
                 Console.WriteLine("_______________________________________________");
 
                 /*Console.WriteLine("\n" + "Матрица логических значений:");
@@ -330,9 +332,9 @@ namespace labs
             var opt = PotentialMethod(plan, costs, a, b, out u, out v, out baseCellRow, out baseCellColumn, out deltaMatrix);
 
             Console.WriteLine("\n" + "Оптимальность плана:");
-            Console.WriteLine("Потенциалы u:", u);
-            Console.WriteLine("Потенциалы v:", v);
-            Console.WriteLine("\nМатрица Невязок:", deltaMatrix);
+            Console.WriteLine("Потенциалы u: {0}", arr_to_string(u));
+            Console.WriteLine("Потенциалы v: {0} ", arr_to_string(v));
+            Console.WriteLine("\nМатрица Невязок: {0}", matrix_to_string(deltaMatrix));
             Console.WriteLine();
 
             if (opt)
@@ -355,6 +357,30 @@ namespace labs
 
             Console.WriteLine("----------------- Метод минимальных тарифов ---------------------");
             MinimumTariffsMethod.Test();
+        }
+
+        public static String arr_to_string(int[] arr) 
+        {
+            String res = "\n";
+            foreach(var val in arr)
+            {
+                res += val + " ";
+            }
+            return res;
+        }
+
+        public static String matrix_to_string(int[,] matrix)
+        {
+            String res = "\n";
+            for(int i=0; i<matrix.GetLength(0); i++)
+            {
+                for(int j=0; j < matrix.GetLength(1); j++)
+                {
+                    res += matrix[i, j] + " ";
+                }
+                res += "\n";
+            }
+            return res;
         }
 
     }

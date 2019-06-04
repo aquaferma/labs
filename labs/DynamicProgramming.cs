@@ -23,7 +23,6 @@ namespace labs
 
         public class MatrixBracketsSetter
         {
-            //© Paulskit 27.03.2010
             //метод который находит матрицу m и s (там же под них и выделяется память)
             public void MatrixChainOrder(DataStore dataStore)
             {
@@ -172,22 +171,13 @@ namespace labs
 
                 watch.Stop();
 
-                Console.WriteLine("Расставленные скобки: " + dataSource.order + " прошло времени: " + watch.ElapsedMilliseconds + " ms");
+                Console.WriteLine("Скобки: " + dataSource.order + " прошло времени: " + watch.ElapsedMilliseconds + " ms");
 
                 Console.WriteLine();
                 Console.WriteLine();
 
-                foreach (var line in ans)
-                {
-                    foreach (var element in line)
-                    {
-                        Console.Write(((element < 0 ? "" : " ") + element).PadRight(13, ' '));
-                    }
-                    Console.WriteLine();
-
-                }
                 
-                }
+            }
         }
 
         public class OptRes
@@ -541,11 +531,9 @@ namespace labs
 
                 #endregion
 
-                OptRes distributionOfResourcesInProduction
-                    = new OptRes(investments, matrixEnterprisePerformance);
+                OptRes distributionOfResourcesInProduction = new OptRes(investments, matrixEnterprisePerformance);
 
                 distributionOfResourcesInProduction.SolutionOfProblemOfDistributionofInvestments();
-
                 
             }
         }
@@ -555,10 +543,9 @@ namespace labs
             Console.WriteLine("------------ Расстановка скобок ---------------");
 
             MatrixBracketsSetter.Test();
-
+    
             Console.WriteLine("------------ Распределение ресурсов ----------------");
             OptRes.Test();
-
         }
     }
 }
